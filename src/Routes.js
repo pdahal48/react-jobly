@@ -9,12 +9,12 @@ import SignUp from './Users/SignUp'
 import Logout from './Users/Logout'
 import Profile from './Users/Profile'
 import CompanyDetail from './Companies/CompanyDetail'
+import App from './App'
 
 const Routes = () => {
     return (
         <div>
             <BrowserRouter>
-            <NavBar />
                 <Switch>
                     <Route exact path = "/">
                         <Home />
@@ -30,9 +30,6 @@ const Routes = () => {
                     </Route>
                     <Route exact path = "/login">
                         <Login />
-                    </Route>
-                    <Route exact path = "/signup">
-                        <SignUp />
                     </Route>
                     <Route exact path = "/profile">
                         <Profile />

@@ -77,6 +77,26 @@ export class JoblyApi {
         return res.job;
     }
 
+    //Users
+
+   /** sign up the user */
+
+//    static async register(userObj) {
+//     let res = await this.request(`auth/register`, {
+//       username: userObj.username,
+//       password: userObj.password,
+//       firstName: userObj.firstName,
+//       lastName: userObj.lastName,
+//       email: userObj.email
+//     });
+//     return res.user;
+// }
+
+
+static async register(userObj) {
+  let res = await this.request(`auth/register`, userObj, "post");
+  return res.token;
+}
 
 }
 
