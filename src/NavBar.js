@@ -11,10 +11,13 @@ const NavBar = ()  => {
     <Nav className="mr-auto">
       <Nav.Link href="/companies">Companies</Nav.Link>
       <Nav.Link href="/jobs">Jobs</Nav.Link>
-      <Nav.Link href="/profile">Profile</Nav.Link>
       </Nav>
       <Nav>
+      <Nav.Link href="/profile">Profile</Nav.Link>
+      <Nav.Link href="/Login">Login</Nav.Link>
+      <Nav.Link href="/SignUp">SignUp</Nav.Link>
       <Nav.Link href="/Logout">Logout</Nav.Link>
+
     </Nav>
     </Navbar.Collapse>
     </Navbar>

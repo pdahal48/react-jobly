@@ -2,9 +2,7 @@ import React from 'react'
 
 const Profile = () => {
     return (
-        <div>
-            <h1>Users will be able to see their profile here</h1>
-        </div>
+        <h1>This is the profile page</h1>
     )
 }
 

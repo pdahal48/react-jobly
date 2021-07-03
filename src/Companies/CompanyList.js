@@ -6,6 +6,10 @@ import { Form, FormLabel } from 'react-bootstrap'
 //Controls State for the company list. Each item in the list is sent to CompanyCard for render.
 const CompanyList = () => {
     const [companies, setCompanies] = useState([])
+    const [formData, setFormData] = useState({
+        searchBox: ""
+    });
+
     
     useEffect(() => {
         async function getCompanies() {
@@ -20,10 +24,6 @@ const CompanyList = () => {
         let NewResult = await API.findCompanies({...formData})
         setCompanies(NewResult.companies)
     }
-
-    const [formData, setFormData] = useState({
-        searchBox: ""
-    });
 
     const handleChange = (e) => {
         const {name, value} = e.target

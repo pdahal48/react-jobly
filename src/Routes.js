@@ -4,9 +4,10 @@ import NavBar from './NavBar'
 import Home from './Home'
 import CompanyList from './Companies/CompanyList'
 import JobList from './Jobs/JobList'
-import Login from './Login'
-import SignUp from './SignUp'
-import Profile from './Profile'
+import Login from './Users/Login'
+import SignUp from './Users/SignUp'
+import Logout from './Users/Logout'
+import Profile from './Users/Profile'
 import CompanyDetail from './Companies/CompanyDetail'
 
 const Routes = () => {
@@ -35,6 +36,9 @@ const Routes = () => {
                     </Route>
                     <Route exact path = "/profile">
                         <Profile />
+                    </Route>
+                    <Route exact path = "/logout">
+                        <Logout />
                     </Route>
                 </Switch>
             </BrowserRouter>
