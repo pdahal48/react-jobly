@@ -9,7 +9,6 @@ const CompanyList = () => {
     const [formData, setFormData] = useState({
         searchBox: ""
     });
-
     
     useEffect(() => {
         async function getCompanies() {

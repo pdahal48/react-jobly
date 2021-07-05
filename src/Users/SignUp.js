@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Alert } from 'react-bootstrap'
 import {JoblyApi as API} from '../backend/helpers/api'
 import { useHistory } from 'react-router'
 
@@ -25,12 +25,15 @@ const SignUp = ({setUser}) => {
     }
 
     async function handleSubmit(e) {
-        e.preventDefault()
-        let user = await API.register({...singUpFormData})
-        console.log(`Form submitted with the following data, ${(singUpFormData)}`)
-        setUser(user);
-        History.push('/')
-        // window.location.reload()
+            e.preventDefault()
+            let user = await API.register({...singUpFormData})
+            if(!user.token){
+                return alert(user.message)
+            } else {
+                setUser(user.token);
+                History.push('/')
+                window.location.reload()
+            }
     }
 
     return (

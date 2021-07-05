@@ -1,4 +1,5 @@
 import axios from "axios";
+const { BadRequestError } = require("../expressError");
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
 /** API Class.
@@ -81,22 +82,25 @@ export class JoblyApi {
 
    /** sign up the user */
 
-//    static async register(userObj) {
-//     let res = await this.request(`auth/register`, {
-//       username: userObj.username,
-//       password: userObj.password,
-//       firstName: userObj.firstName,
-//       lastName: userObj.lastName,
-//       email: userObj.email
-//     });
-//     return res.user;
-// }
-
-
 static async register(userObj) {
-  let res = await this.request(`auth/register`, userObj, "post");
-  return res.token;
+  try {
+    let res = await this.request(`auth/register`, userObj, "post");
+    return res;
+  } catch(e) {
+      return new Error(e);
+  }
 }
+
+   /** Logs in the user */
+
+   static async login(userObj) {
+    try {
+      let res = await this.request(`auth/token`, userObj, "post");
+      return res;
+    } catch(e) {
+        return new Error(e);
+    }
+  }
 
 }
 
