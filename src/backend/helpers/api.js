@@ -102,9 +102,21 @@ static async register(userObj) {
     }
   }
 
+    /** PUlls user info */
+
+    static async get(username) {
+      try {
+        console.log(username)
+        console.log(`token is ${JoblyApi.token}`);
+        let res = await this.request(`users/${username}`);
+        return res;
+      } catch(e) {
+          return new Error(e);
+      }
+    }
 }
+  JoblyApi.token = localStorage['user-token']
 
 // for now, put token ("testuser" / "password" on class)
-JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
-    "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
-    "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
+// JoblyApi.token = "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBkYWhhbDQwIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYyNTUwODE2N30.75rmK5OWZ7py5bIJOAXgBOgXG9zSnabq-1L1QchJ8oo\"";
+
