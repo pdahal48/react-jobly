@@ -2,7 +2,7 @@ import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 
  
-const NavBar = ()  => {
+const NavBar = ({ user })  => {
   return (
 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
     <Navbar.Brand className="active" href="/">Jobly</Navbar.Brand>
@@ -14,7 +14,7 @@ const NavBar = ()  => {
       <Nav.Link href="/companies">Companies</Nav.Link>
       <Nav.Link href="/jobs">Jobs</Nav.Link>
       <Nav.Link href="/profile">Profile</Nav.Link>
-      <Nav.Link href="/Logout">Logout</Nav.Link>
+      <Nav.Link href="/Logout">Logout {user}</Nav.Link>
     </Nav>
     </Navbar.Collapse>
     </Navbar>
