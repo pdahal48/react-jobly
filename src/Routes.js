@@ -1,6 +1,5 @@
 import React from 'react'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
-import Home from './Home'
 import CompanyList from './Companies/CompanyList'
 import JobList from './Jobs/JobList'
 import Login from './Users/Login'
@@ -13,9 +12,6 @@ const Routes = () => {
         <div>
             <BrowserRouter>
                 <Switch>
-                    <Route exact path = "/">
-                        <Home />
-                    </Route>
                     <Route exact path = "/companies">
                         <CompanyList />
                     </Route>
