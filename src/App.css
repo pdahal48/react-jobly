@@ -7,3 +7,10 @@ a.custom-card:hover {
   color: inherit;
   text-decoration: none;
 }
+
+.homepage {
+  height: calc(100vh - 150px);
+  align-items: center;
+  display: flex;
+
+}
