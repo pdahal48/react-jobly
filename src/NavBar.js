@@ -1,10 +1,22 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import userContext from './Users/UserContext'
+import jwt from 'jsonwebtoken'
+
 
  
 const NavBar = ()  => {
-  const username = useContext(userContext)
+  const currUserToken = useContext(userContext)
+  const [userName, setUserName] = useState(null)
+
+
+  useEffect(() => {
+    async function getUserInfo(){
+        let { username } = jwt.decode(currUserToken)
+        setUserName(username)
+    }
+    getUserInfo()
+}, [])
 
   return (
 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -17,7 +29,7 @@ const NavBar = ()  => {
       <Nav.Link href="/companies">Companies</Nav.Link>
       <Nav.Link href="/jobs">Jobs</Nav.Link>
       <Nav.Link href="/profile">Profile</Nav.Link>
-      <Nav.Link href="/Logout">Logout {username}</Nav.Link>
+      <Nav.Link href="/Logout">Logout {userName}</Nav.Link>
     </Nav>
     </Navbar.Collapse>
     </Navbar>
