@@ -107,8 +107,6 @@ static async register(userObj) {
 
     static async get(username) {
       try {
-        console.log(username)
-        console.log(`token is ${JoblyApi.token}`);
         let res = await this.request(`users/${username}`);
         return res;
       } catch(e) {

@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import Routes from './Routes'
-import SignUp from './Users/SignUp'
-import Login from './Users/Login'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import NavBar from './NavBar'
 import NavBar_2 from './Users/NavBar_2'
@@ -16,39 +14,45 @@ import './App.css';
 
 function App() {
   const [currUserToken, setCurrUserToken] = useLocalStorage('user-token')
-  const [currUserName, setCurrUsername] = useState(null)
+  const [currentUser, setCurrentUser] = useState(null)
 
-  useEffect( () => {
+  useEffect(() => {
     async function getCurrUserName() {
-        let { username } = jwt.decode(currUserToken)
-        setCurrUsername(username)
-        API.token = currUserToken
-    }
-    if (currUserToken !== null) {
-      return getCurrUserName()
-    }
-  }, [currUserName])
+      if (currUserToken) {
+        try {
+          let { username } = jwt.decode(currUserToken)
+          API.token = currUserToken
+          let currentUser = await API.get(username)
+          setCurrentUser(currentUser.user)
+        } catch(e) {
+          setCurrentUser(null)
+        }
+      }}
+      getCurrUserName()
+    }, [currUserToken])
+
+  function logout() {
+    setCurrentUser(null);
+    setCurrUserToken(null);
+  }
 
   return (
     <div className="App">
       <div> 
-      <userContext.Provider value = {currUserToken}>
+      {(currentUser !== null) &&
+          <userContext.Provider value = {{currentUser, setCurrentUser}}>
         <BrowserRouter>
         {(currUserToken !== null) ? <NavBar /> : <NavBar_2 /> } 
           <Switch>
               <Route exact path = "/">
                   <Home/>
               </Route>
-              <Route exact path = "/signup">
-                  <SignUp setUser = {setCurrUserToken}/>
-              </Route>
-              <Route exact path = "/login">
-                  <Login setUser = {setCurrUserToken}/>
-              </Route>
+              
           </Switch>
           <Routes />
       </BrowserRouter>
-      </userContext.Provider>
+      </userContext.Provider> 
+}
       </div>
     </div>
   );

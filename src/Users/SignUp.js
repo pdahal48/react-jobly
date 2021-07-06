@@ -1,9 +1,10 @@
-import React, {useState} from 'react'
-import { Form, Button, Alert } from 'react-bootstrap'
+import React, {useState, useContext} from 'react'
+import { Form, Button } from 'react-bootstrap'
 import {JoblyApi as API} from '../backend/helpers/api'
 import { useHistory } from 'react-router'
+import userContext from './UserContext'
 
-const SignUp = ({setUser}) => {
+const SignUp = () => {
 
     const INITIAL_DATA = ({
         username: "",
@@ -11,10 +12,11 @@ const SignUp = ({setUser}) => {
         lastName: "",
         email: "",
         password: ""
-      })
+    })
 
     const [singUpFormData, setsignUpFormData] = useState(INITIAL_DATA);
     const History = useHistory()
+    const setCurrentUser = userContext(userContext)
 
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -30,7 +32,7 @@ const SignUp = ({setUser}) => {
             if(!user.token){
                 return alert(user.message)
             } else {
-                setUser(user.token);
+                setCurrentUser(user.token);
                 History.push('/')
                 window.location.reload()
             }

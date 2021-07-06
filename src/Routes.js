@@ -3,15 +3,23 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import CompanyList from './Companies/CompanyList'
 import JobList from './Jobs/JobList'
 import Login from './Users/Login'
+import SignUp from './Users/SignUp'
 import Logout from './Users/Logout'
 import Profile from './Users/Profile'
 import CompanyDetail from './Companies/CompanyDetail'
+
 
 const Routes = () => {
     return (
         <div>
             <BrowserRouter>
                 <Switch>
+                    <Route exact path = "/signup">
+                        <SignUp />
+                    </Route>
+                    <Route exact path = "/login">
+                        <Login />
+                    </Route>
                     <Route exact path = "/companies">
                         <CompanyList />
                     </Route>

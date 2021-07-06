@@ -14,7 +14,6 @@ const CompanyList = () => {
     });
 
     const currUserName = useContext(userContext)
-    console.log(currUserName)
     const History = useHistory()
 
 
