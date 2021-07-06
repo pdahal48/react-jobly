@@ -1,23 +1,16 @@
-import react, {useEffect, useState} from 'react'
+import react, {useEffect, useState, useContext} from 'react'
 import {JoblyApi as API} from './backend/helpers/api'
+import userContext from './Users/UserContext'
+import jwt from 'jsonwebtoken'
 
 const Home = () => {
-    const [currUser, setCurrUser] = useState([])
 
-    useEffect(() => {
-        async function getUser() {
-            const newUser = await API.get('pdahal31')
-            setCurrUser(newUser)
-            console.log('New user is ' + newUser.user.firstName)
-        }
-        getUser()
-    }, [])
+    const currUserName = useContext(userContext)
 
     return (
         <div>
-           {currUser != null ? `Welcome ${currUser.user.firstName}` : "Hello"}
+           {currUserName !== undefined ? `Welcome ${currUserName}` : "Hello"}
         </div>
-
     )
 }
 

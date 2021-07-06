@@ -28,7 +28,7 @@ const Login = ({setUser}) => {
             } else {
                 setUser(user.token);
                 History.push('/')
-                // window.location.reload()
+                window.location.reload()
             }
     }
 

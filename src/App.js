@@ -7,29 +7,44 @@ import NavBar from './NavBar'
 import NavBar_2 from './Users/NavBar_2'
 import useLocalStorage from './Hooks'
 import Home from './Home'
+import userContext from './Users/UserContext'
+import jwt from 'jsonwebtoken'
 import './App.css';
 
 
 function App() {
-  const [user, setUser] = useLocalStorage('user-token')
+  const [currUserToken, setCurrUserToken] = useLocalStorage('user-token')
+  const [currUserName, setCurrUsername] = useState()
 
+  useEffect( () => {
+    async function getCurrUserName() {
+      if (currUserToken) {
+        const { username } = await jwt.decode(currUserToken)
+        setCurrUsername(username)
+      }
+    }
+    getCurrUserName()
+
+  }, [currUserToken])
   return (
     <div className="App">
+      <userContext.Provider value = {currUserName}>
         <BrowserRouter>
-        {(user !== null) ? <NavBar user = {user}/> : <NavBar_2 /> } 
+        {(currUserToken !== null) ? <NavBar /> : <NavBar_2 /> } 
                 <Switch>
                     <Route exact path = "/">
-                        <Home user = {user}/>
+                        <Home/>
                     </Route>
                     <Route exact path = "/signup">
-                        <SignUp setUser = {setUser}/>
+                        <SignUp setUser = {setCurrUserToken}/>
                     </Route>
                     <Route exact path = "/login">
-                        <Login setUser = {setUser}/>
+                        <Login setUser = {setCurrUserToken}/>
                     </Route>
                 </Switch>
                 <Routes />
             </BrowserRouter>
+            </userContext.Provider>
     </div>
   );
 }
