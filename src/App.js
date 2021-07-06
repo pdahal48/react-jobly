@@ -18,33 +18,34 @@ function App() {
 
   useEffect( () => {
     async function getCurrUserName() {
-      if (currUserToken) {
-        const { username } = await jwt.decode(currUserToken)
-        setCurrUsername(username)
-      }
+      if (currUserToken === null) return ('/')
+      const { username } = jwt.decode(currUserToken)
+      setCurrUsername(username)
     }
     getCurrUserName()
 
   }, [currUserToken])
   return (
     <div className="App">
+      <div> 
       <userContext.Provider value = {currUserName}>
         <BrowserRouter>
         {(currUserToken !== null) ? <NavBar /> : <NavBar_2 /> } 
-                <Switch>
-                    <Route exact path = "/">
-                        <Home/>
-                    </Route>
-                    <Route exact path = "/signup">
-                        <SignUp setUser = {setCurrUserToken}/>
-                    </Route>
-                    <Route exact path = "/login">
-                        <Login setUser = {setCurrUserToken}/>
-                    </Route>
-                </Switch>
-                <Routes />
-            </BrowserRouter>
-            </userContext.Provider>
+          <Switch>
+              <Route exact path = "/">
+                  <Home/>
+              </Route>
+              <Route exact path = "/signup">
+                  <SignUp setUser = {setCurrUserToken}/>
+              </Route>
+              <Route exact path = "/login">
+                  <Login setUser = {setCurrUserToken}/>
+              </Route>
+          </Switch>
+          <Routes />
+      </BrowserRouter>
+      </userContext.Provider>
+      </div>
     </div>
   );
 }

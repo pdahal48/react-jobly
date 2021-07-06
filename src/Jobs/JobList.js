@@ -1,14 +1,19 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import {JoblyApi as API} from '../backend/helpers/api'
 import JobCard from './JobCard'
+import userContext from '../Users/UserContext'
 import { Form, FormLabel } from 'react-bootstrap'
+import {useHistory} from 'react-router-dom'
 
 //Controls State for the company list. Each item in the list is sent to CompanyCard for render.
 const JobList = () => {
     const [jobs, setJobs] = useState([])
-    
+    const currUserName = useContext(userContext)
+    const History = useHistory()
+
     useEffect(() => {
         async function getJobs() {
+            if (currUserName === undefined) return History.go('/login')
             const allJobs = await API.getJobs()
             setJobs(allJobs)
         }
@@ -35,6 +40,8 @@ const JobList = () => {
 
     return (
         <div>
+       {(currUserName !== undefined) ?
+       <div>
         <div className = "container">
         <Form inline className = "justify-content-center my-2 form-xl" onSubmit = {handleSubmit}>
             <FormLabel htmlFor = "searchBox"> </FormLabel>
@@ -53,7 +60,16 @@ const JobList = () => {
                 return (
                     <JobCard job = {job} key = {job.id}/>
                 )
-            })}   
+            })}
+        </div>
+        :  (
+            <div>
+                {
+                History.push('/login')
+                }
+            </div>
+        )
+        }  
         </div>
     )
 }
