@@ -116,7 +116,7 @@ static async register(userObj) {
       }
     }
 }
-  JoblyApi.token = localStorage['user-token']
+  // JoblyApi.token = localStorage['user-token']
 
 // for now, put token ("testuser" / "password" on class)
 // JoblyApi.token = "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBkYWhhbDQwIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYyNTUwODE2N30.75rmK5OWZ7py5bIJOAXgBOgXG9zSnabq-1L1QchJ8oo\"";

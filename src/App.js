@@ -9,26 +9,30 @@ import useLocalStorage from './Hooks'
 import Home from './Home'
 import userContext from './Users/UserContext'
 import jwt from 'jsonwebtoken'
+import {JoblyApi as API} from './backend/helpers/api'
+
 import './App.css';
 
 
 function App() {
   const [currUserToken, setCurrUserToken] = useLocalStorage('user-token')
-  const [currUserName, setCurrUsername] = useState()
+  const [currUserName, setCurrUsername] = useState(null)
 
   useEffect( () => {
     async function getCurrUserName() {
-      if (currUserToken === null) return ('/')
-      const { username } = jwt.decode(currUserToken)
-      setCurrUsername(username)
+        let { username } = jwt.decode(currUserToken)
+        setCurrUsername(username)
+        API.token = currUserToken
     }
-    getCurrUserName()
+    if (currUserToken !== null) {
+      return getCurrUserName()
+    }
+  }, [currUserName])
 
-  }, [currUserToken])
   return (
     <div className="App">
       <div> 
-      <userContext.Provider value = {currUserName}>
+      <userContext.Provider value = {currUserToken}>
         <BrowserRouter>
         {(currUserToken !== null) ? <NavBar /> : <NavBar_2 /> } 
           <Switch>

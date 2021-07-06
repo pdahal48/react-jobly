@@ -14,12 +14,13 @@ const CompanyList = () => {
     });
 
     const currUserName = useContext(userContext)
+    console.log(currUserName)
     const History = useHistory()
 
 
     useEffect(() => {
         async function getCompanies() {
-            if (currUserName === undefined) return History.go('/login')
+            if (currUserName === null) return History.go('/login')
             const Comp = await API.getCompanies()
             setCompanies(Comp)
         }
@@ -42,7 +43,7 @@ const CompanyList = () => {
 
     return (
         <div>
-        {(currUserName !== undefined) ?
+        {(currUserName !== null) ?
         <div>
         <div className = "container">
         <Form inline className = "justify-content-center my-2 form-xl" onSubmit = {handleSubmit}>

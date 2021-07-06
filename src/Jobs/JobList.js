@@ -13,7 +13,7 @@ const JobList = () => {
 
     useEffect(() => {
         async function getJobs() {
-            if (currUserName === undefined) return History.go('/login')
+            if (currUserName === null) return History.go('/login')
             const allJobs = await API.getJobs()
             setJobs(allJobs)
         }
@@ -40,7 +40,7 @@ const JobList = () => {
 
     return (
         <div>
-       {(currUserName !== undefined) ?
+       {(currUserName !== null) ?
        <div>
         <div className = "container">
         <Form inline className = "justify-content-center my-2 form-xl" onSubmit = {handleSubmit}>
