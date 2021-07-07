@@ -1,13 +1,12 @@
-import react, {useEffect, useState, useContext} from 'react'
+import react, { useState, useContext} from 'react'
 import {JoblyApi as API} from '../backend/helpers/api'
 import UserContext from './UserContext'
-import jwt from 'jsonwebtoken'
-import { Form, Button } from 'react-bootstrap'
+import {useHistory} from 'react-router-dom'
 
 const Profile = () => {
     const { currentUser, setCurrentUser } = useContext(UserContext)
+    const History = useHistory()
 
-    console.log(currentUser)
     const [signupformdata, setSignUpFormData] = useState({
         username: currentUser.username,
         firstName: currentUser.firstName,
@@ -37,8 +36,8 @@ const Profile = () => {
         }
         setSignUpFormData(f => ({ ...f, password: "" }));
         setCurrentUser(updatedUser);
-
-}
+        History.push('/')
+    }
 
     const handleChange = (e) => {
         const {name, value} = e.target

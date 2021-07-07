@@ -14,10 +14,7 @@ const CompanyList = () => {
     });
 
     const { currUserToken } = useContext(userContext)
-    console.log(currUserToken)
-
     const History = useHistory()
-
 
     useEffect(() => {
         async function getCompanies() {

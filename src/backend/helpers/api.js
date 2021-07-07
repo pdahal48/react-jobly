@@ -95,7 +95,6 @@ static async register(userObj) {
 
    static async login(userObj) {
     try {
-      console.log(userObj)
       let res = await this.request(`auth/token`, userObj, "post");
       return res;
     } catch(e) {

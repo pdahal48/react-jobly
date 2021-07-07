@@ -1,44 +1,60 @@
-import React from 'react'
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
-import CompanyList from './Companies/CompanyList'
-import JobList from './Jobs/JobList'
-import Login from './Users/Login'
-import SignUp from './Users/SignUp'
-import Logout from './Users/Logout'
-import Profile from './Users/Profile'
-import CompanyDetail from './Companies/CompanyDetail'
+import React from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import Home from "./Home";
+import CompanyList from "./Companies/CompanyList";
+import JobList from "./Jobs/JobList";
+import CompanyDetail from "./Companies/CompanyDetail";
+import Login from "./Users/Login";
+import Profile from "./Users/Profile";
+import SignUp from "./Users/SignUp";
+import PrivateRoute from "./PrivateRoute";
 
+/** Site-wide routes.
+ *
+ * Parts of site should only be visitable when logged in. Those routes are
+ * wrapped by <PrivateRoute>, which is an authorization component.
+ *
+ * Visiting a non-existant route redirects to the homepage.
+ */
 
-const Routes = () => {
-    return (
-        <div>
-            <BrowserRouter>
-                <Switch>
-                    <Route exact path = "/signup">
-                        <SignUp />
-                    </Route>
-                    <Route exact path = "/login">
-                        <Login />
-                    </Route>
-                    <Route exact path = "/companies">
-                        <CompanyList />
-                    </Route>
-                    <Route exact path = "/companies/:company">
-                        <CompanyDetail />
-                    </Route>
-                    <Route exact path = "/jobs">
-                        <JobList />
-                    </Route>
-                    <Route exact path = "/profile">
-                        <Profile />
-                    </Route>
-                    <Route exact path = "/logout">
-                        <Logout />
-                    </Route>
-                </Switch>
-            </BrowserRouter>
-        </div>
-    )
+function Routes({ login, signup }) {
+
+  return (
+      <div className="pt-5">
+        <Switch>
+
+          <Route exact path="/">
+            <Home />
+          </Route>
+
+          <Route exact path="/login">
+            <Login login={login} />
+          </Route>
+
+          <Route exact path="/signup">
+            <SignUp signup={signup} />
+          </Route>
+
+          <PrivateRoute exact path="/companies">
+            <CompanyList />
+          </PrivateRoute>
+
+          <PrivateRoute exact path="/jobs">
+            <JobList />
+          </PrivateRoute>
+
+          <PrivateRoute exact path="/companies/:handle">
+            <CompanyDetail />
+          </PrivateRoute>
+
+          <PrivateRoute path="/profile">
+            <Profile />
+          </PrivateRoute>
+
+          <Redirect to="/" />
+        </Switch>
+      </div>
+  );
 }
 
 export default Routes;
