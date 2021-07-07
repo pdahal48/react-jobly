@@ -119,6 +119,14 @@ static async register(userObj) {
     let res = await this.request(`users/${username}`, data, "patch");
     return res.user;
   }
+
+    /** Apply to a job */
+
+  static async applyToJob(username, id) {
+    await this.request(`users/${username}/jobs/${id}`, {}, "post");
+  }
+
+
 }
   // JoblyApi.token = localStorage['user-token']
 
