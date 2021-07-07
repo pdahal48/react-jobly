@@ -8,12 +8,12 @@ import {useHistory} from 'react-router-dom'
 //Controls State for the company list. Each item in the list is sent to CompanyCard for render.
 const JobList = () => {
     const [jobs, setJobs] = useState([])
-    const currUserName = useContext(userContext)
+    const { currUserToken } = useContext(userContext)
     const History = useHistory()
 
     useEffect(() => {
         async function getJobs() {
-            if (currUserName === null) return History.go('/login')
+            if (!currUserToken) return History.go('/login')
             const allJobs = await API.getJobs()
             setJobs(allJobs)
         }
@@ -40,7 +40,7 @@ const JobList = () => {
 
     return (
         <div>
-       {(currUserName !== null) ?
+       {(currUserToken !== null) ?
        <div>
         <div className = "container">
         <Form inline className = "justify-content-center my-2 form-xl" onSubmit = {handleSubmit}>

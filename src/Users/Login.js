@@ -29,8 +29,8 @@ const Login = () => {
                 return alert(user.message)
             } else {
                 setCurrUserToken(user.token);
-                // History.push('/')
-                // window.location.reload()
+                History.push('/')
+                window.location.reload()
             }
     }
 

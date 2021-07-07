@@ -13,14 +13,15 @@ const CompanyList = () => {
         searchBox: ""
     });
 
-    const { currentUser, currentUserToken } = useContext(userContext)
+    const { currUserToken } = useContext(userContext)
+    console.log(currUserToken)
 
     const History = useHistory()
 
 
     useEffect(() => {
         async function getCompanies() {
-            if (!currentUser) return History.go('/login')
+            if (!currUserToken) return History.go('/login')
             const Comp = await API.getCompanies()
             setCompanies(Comp)
         }
@@ -43,7 +44,7 @@ const CompanyList = () => {
 
     return (
         <div>
-        {(currentUser !== null) ?
+        {(currUserToken !== null) ?
         <div>
         <div className = "container">
         <Form inline className = "justify-content-center my-2 form-xl" onSubmit = {handleSubmit}>

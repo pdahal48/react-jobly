@@ -55,7 +55,7 @@ function App() {
       </BrowserRouter>
       </userContext.Provider>
       : 
-      <userContext.Provider value = {{currentUser, setCurrUserToken}}>
+      <userContext.Provider value = {{currentUser, setCurrUserToken, currUserToken}}>
       <BrowserRouter>
       <NavBar_2 /> 
         <Switch>
