@@ -113,6 +113,13 @@ static async register(userObj) {
           return new Error(e);
       }
     }
+
+    /** Save user profile page. */
+
+  static async saveProfile(username, data) {
+    let res = await this.request(`users/${username}`, data, "patch");
+    return res.user;
+  }
 }
   // JoblyApi.token = localStorage['user-token']
 

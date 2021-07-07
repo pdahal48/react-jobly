@@ -5,7 +5,7 @@ import NavBar from './NavBar'
 import NavBar_2 from './Users/NavBar_2'
 import useLocalStorage from './Hooks'
 import Home from './Home'
-import userContext from './Users/UserContext'
+import UserContext from './Users/UserContext'
 import jwt from 'jsonwebtoken'
 import {JoblyApi as API} from './backend/helpers/api'
 import './App.css';
@@ -15,7 +15,7 @@ export const TOKEN_STORAGE_ID = "jobly-token";
 
 function App() {
   const [currUserToken, setCurrUserToken] = useLocalStorage(TOKEN_STORAGE_ID)
-  const [currentUser, setCurrentUser] = useState(null)
+  const [currentUser, setCurrentUser] = useState([null])
 
   useEffect(() => {
     async function getCurrUserName() {
@@ -42,7 +42,7 @@ function App() {
     <div className="App">
       <div>
         {currentUser !== null ?
-      <userContext.Provider value = {{currentUser, setCurrUserToken, currUserToken}}>
+      <UserContext.Provider value = {{currentUser, setCurrUserToken, currUserToken}}>
         <BrowserRouter>
         {(currUserToken !== null) ? <NavBar /> : <NavBar_2 /> } 
           <Switch>
@@ -53,9 +53,9 @@ function App() {
           </Switch>
           <Routes />
       </BrowserRouter>
-      </userContext.Provider>
+      </UserContext.Provider>
       : 
-      <userContext.Provider value = {{currentUser, setCurrUserToken, currUserToken}}>
+      <UserContext.Provider value = {{currentUser, setCurrUserToken, currUserToken, setCurrentUser}}>
       <BrowserRouter>
       <NavBar_2 /> 
         <Switch>
@@ -66,7 +66,7 @@ function App() {
         </Switch>
         <Routes />
     </BrowserRouter>
-    </userContext.Provider>
+    </UserContext.Provider>
 }
       </div>
     </div>
