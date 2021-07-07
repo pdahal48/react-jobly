@@ -16,7 +16,7 @@ const SignUp = () => {
 
     const [singUpFormData, setsignUpFormData] = useState(INITIAL_DATA);
     const History = useHistory()
-    const setCurrentUser = userContext(userContext)
+    const { currentUser, setCurrentUser } = useContext(userContext)
 
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -39,7 +39,8 @@ const SignUp = () => {
     }
 
     return (
-        <div className = "container col-md-6 offset-md-3 col-lg-4 offset-lg-4" >
+        <div>
+            <div className = "container col-md-6 offset-md-3 col-lg-4 offset-lg-4" >
             <div className = "display-4 my-3">Sign Up</div>
             <div className = "card">
                 <div className = "card-body">
@@ -101,6 +102,7 @@ const SignUp = () => {
                 </Form>
                 </div>
                 </div>
+        </div>
         </div>
     )
 }

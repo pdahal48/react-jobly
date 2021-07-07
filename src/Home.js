@@ -13,7 +13,7 @@ const Home = () => {
            <h1 className="display-4">Jobly</h1>
             <p className="lead">All the jobs in one, convenient place</p>
            {
-                currentUser !== undefined ? <h2>Welcome back, {currentUser.firstName} </h2> : 
+                currentUser !== null ? <h2>Welcome back, {currentUser.firstName} </h2> : 
                 <div className="mt-3">
                     <a className="btn btn-primary font-weight-bold mr-3" href="/login">Login</a>
                     <a className="btn btn-primary font-weight-bold" href="/signup">Sign Up</a>

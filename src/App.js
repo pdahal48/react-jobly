@@ -8,12 +8,13 @@ import Home from './Home'
 import userContext from './Users/UserContext'
 import jwt from 'jsonwebtoken'
 import {JoblyApi as API} from './backend/helpers/api'
-
 import './App.css';
 
+// Key name for storing token in localStorage for "remember me" re-login
+export const TOKEN_STORAGE_ID = "jobly-token";
 
 function App() {
-  const [currUserToken, setCurrUserToken] = useLocalStorage('user-token')
+  const [currUserToken, setCurrUserToken] = useLocalStorage(TOKEN_STORAGE_ID)
   const [currentUser, setCurrentUser] = useState(null)
 
   useEffect(() => {
@@ -36,11 +37,12 @@ function App() {
     setCurrUserToken(null);
   }
 
+
   return (
     <div className="App">
-      <div> 
-      {(currentUser !== null) &&
-          <userContext.Provider value = {{currentUser, setCurrentUser}}>
+      <div>
+        {currentUser !== null ?
+      <userContext.Provider value = {{currentUser, setCurrUserToken, currUserToken}}>
         <BrowserRouter>
         {(currUserToken !== null) ? <NavBar /> : <NavBar_2 /> } 
           <Switch>
@@ -51,7 +53,20 @@ function App() {
           </Switch>
           <Routes />
       </BrowserRouter>
-      </userContext.Provider> 
+      </userContext.Provider>
+      : 
+      <userContext.Provider value = {{currentUser, setCurrUserToken}}>
+      <BrowserRouter>
+      <NavBar_2 /> 
+        <Switch>
+            <Route exact path = "/">
+                <Home/>
+            </Route>
+            
+        </Switch>
+        <Routes />
+    </BrowserRouter>
+    </userContext.Provider>
 }
       </div>
     </div>
