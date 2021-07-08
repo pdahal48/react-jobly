@@ -1,79 +1,49 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {JoblyApi as API} from '../backend/helpers/api'
-import CompanyCard from './CompanyCard'
-import { Form, FormLabel } from 'react-bootstrap'
-import userContext from '../Users/UserContext'
-import {useHistory} from 'react-router-dom'
-
+import SearchForm from "../SearchForm";
+import CompanyCard from "./CompanyCard";
+import LoadingSpinner from "../LoadingSpinner";
 
 //Controls State for the company list. Each item in the list is sent to CompanyCard for render.
 const CompanyList = () => {
     const [companies, setCompanies] = useState([])
-    const [formData, setFormData] = useState({
-        searchBox: ""
-    });
-
-    const { currUserToken } = useContext(userContext)
-    const History = useHistory()
 
     useEffect(() => {
-        async function getCompanies() {
-            if (!currUserToken) return History.go('/login')
-            const Comp = await API.getCompanies()
-            setCompanies(Comp)
+        async function getCompanies(name) {
+            const companies = await API.getCompanies(name)
+            setCompanies(companies)
         }
         getCompanies()
     }, [])
 
-    async function handleSubmit(e) {
-        e.preventDefault()
-        let NewResult = await API.findCompanies({...formData})
-        setCompanies(NewResult.companies)
+    /** Triggered by search form submit; reloads companies. */
+    async function search(name) {
+        let companies = await API.getCompanies(name);
+        setCompanies(companies);
     }
-
-    const handleChange = (e) => {
-        const {name, value} = e.target
-        setFormData(data => ({
-            ...data,
-            [name]: value
-        }))
-    }
+    if (!companies) return <LoadingSpinner />;
 
     return (
-        <div>
-        {(currUserToken !== null) ?
-        <div>
-        <div className = "container">
-        <Form inline className = "justify-content-center my-2 form-xl" onSubmit = {handleSubmit}>
-            <FormLabel htmlFor = "searchBox"> </FormLabel>
-            <input className = "form-control"
-                id = "1"
-                type="text"
-                name = "searchBox"
-                placeholder = "Enter search term..."
-                value = {formData.searchBox}
-                onChange = {handleChange}
-            />
-            <button className = "ml-1 btn btn-primary" variant="outline-success">Search</button>
-        </Form>
+        <div className="CompanyList col-md-8 offset-md-2">
+          <SearchForm searchFor ={search} />
+          {companies.length
+              ? (
+                  <div className="CompanyList-list">
+                    {companies.map(c => (
+                        <CompanyCard
+                            key={c.handle}
+                            handle={c.handle}
+                            name={c.name}
+                            description={c.description}
+                            logoUrl={c.logoUrl}
+                        />
+                    ))}
+                  </div>
+              ) : (
+                  <p className="lead">Sorry, no results were found!</p>
+              )}
         </div>
-            {companies.map(comp => {
-                return (
-                    <CompanyCard company = {comp} key = {comp.name}/>
-                )
-            })}   
-        </div>
-        :  (
-            <div>
-                {
-                History.push('/login')
-                }
-            </div>
-        )
-        }
-    </div>
-
-    )
+    );
 }
 
 

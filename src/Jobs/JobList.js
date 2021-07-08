@@ -1,77 +1,30 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {JoblyApi as API} from '../backend/helpers/api'
-import JobCard from './JobCard'
-import userContext from '../Users/UserContext'
-import { Form, FormLabel } from 'react-bootstrap'
-import {useHistory} from 'react-router-dom'
+import Search from "../SearchForm";
+import JobCardList from './JobCardList'
 
 //Controls State for the company list. Each item in the list is sent to CompanyCard for render.
 const JobList = () => {
     const [jobs, setJobs] = useState([])
-    const { currUserToken } = useContext(userContext)
-    const History = useHistory()
 
     useEffect(() => {
-        async function getJobs() {
-            if (!currUserToken) return History.go('/login')
-            const allJobs = await API.getJobs()
-            setJobs(allJobs)
-        }
-        getJobs()
+        search();
     }, [])
 
-    async function handleSubmit(e) {
-        e.preventDefault()
-        let NewResult = await API.findJobs({...formData})
-        setJobs(NewResult.jobs)
-    }
-
-    const [formData, setFormData] = useState({
-        searchBox: ""
-    });
-
-    const handleChange = (e) => {
-        const {name, value} = e.target
-        setFormData(data => ({
-            ...data,
-            [name]: value
-        }))
+    async function search(title) {
+        let jobs = await API.getJobs(title);
+        setJobs(jobs);
     }
 
     return (
-        <div>
-       {(currUserToken !== null) ?
-       <div>
-        <div className = "container">
-        <Form inline className = "justify-content-center my-2 form-xl" onSubmit = {handleSubmit}>
-            <FormLabel htmlFor = "searchBox"> </FormLabel>
-            <input className = "form-control"
-                id = "1"
-                type="text"
-                name = "searchBox"
-                placeholder = "Enter search term..."
-                value = {formData.searchBox}
-                onChange = {handleChange}
-            />
-            <button className = "ml-1 btn btn-primary" variant="outline-success">Search</button>
-        </Form>
+        <div className="JobList col-md-8 offset-md-2">
+          <Search searchFor={search} />
+          {jobs.length
+              ? <JobCardList jobs={jobs} />
+              : <p className="lead">Sorry, no results were found!</p>
+          }
         </div>
-            {jobs.map(job => {
-                return (
-                    <JobCard job = {job} key = {job.id}/>
-                )
-            })}
-        </div>
-        :  (
-            <div>
-                {
-                History.push('/login')
-                }
-            </div>
-        )
-        }  
-        </div>
-    )
+    );
 }
 
 

@@ -1,18 +1,22 @@
 import React, {useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
 import {JoblyApi as API} from '../backend/helpers/api'
+import LoadingSpinner from "../LoadingSpinner";
 
 const CompanyDetail = () => {
-    const { company } = useParams()
+
+    const { handle } = useParams()
     const [companyInfo, setCompanyInfo] = useState([])
 
     useEffect(() => {
         async function getCompanyDetail() {
-            const comp = await API.getCompany(company)
-            setCompanyInfo(comp)
+            const comp = await API.getCompany(handle)
+            setCompanyInfo(await API.getCompany(handle))
         }
         getCompanyDetail()
-    }, [companyInfo])
+    }, [handle])
+
+    if (!companyInfo) return <LoadingSpinner />;
 
     return (
         <div className = "container">

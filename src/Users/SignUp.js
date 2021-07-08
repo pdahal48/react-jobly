@@ -1,10 +1,9 @@
 import React, {useState, useContext} from 'react'
 import { Form, Button } from 'react-bootstrap'
-import {JoblyApi as API} from '../backend/helpers/api'
 import { useHistory } from 'react-router'
-import userContext from './UserContext'
 
-const SignUp = () => {
+const SignUp = ({signup}) => {
+    const history = useHistory();
 
     const INITIAL_DATA = ({
         username: "",
@@ -15,8 +14,16 @@ const SignUp = () => {
     })
 
     const [singUpFormData, setsignUpFormData] = useState(INITIAL_DATA);
-    const History = useHistory()
-    const { currentUser, setCurrentUser } = useContext(userContext)
+
+    async function handleSubmit(e) {
+        e.preventDefault()
+        let user = await signup({...singUpFormData})
+        if(user.success){
+            history.push("/companies");
+        } else {
+           return alert(user.errors)
+        }
+}
 
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -26,17 +33,6 @@ const SignUp = () => {
         }))
     }
 
-    async function handleSubmit(e) {
-            e.preventDefault()
-            let user = await API.register({...singUpFormData})
-            if(!user.token){
-                return alert(user.message)
-            } else {
-                setCurrentUser(user.token);
-                History.push('/')
-                window.location.reload()
-            }
-    }
 
     return (
         <div>

@@ -45,8 +45,8 @@ export class JoblyApi {
 
     /** Get list of all companies in the database */
 
-    static async getCompanies() {
-      let res = await this.request(`companies`);
+    static async getCompanies(name) {
+      let res = await this.request("companies", { name });
       return res.companies;
     }
     // Get all matching companies from the database
@@ -67,9 +67,9 @@ export class JoblyApi {
 
     /** Get list of all jobs in the database */
 
-    static async getJobs() {
-        let res = await this.request(`jobs`);
-        return res.jobs;
+    static async getJobs(title) {
+      let res = await this.request("jobs", { title });
+      return res.jobs;
     }
     /** Get detials on a job by its title */
 
@@ -78,14 +78,21 @@ export class JoblyApi {
         return res.job;
     }
 
+
+    /** Apply to a job */
+
+  static async applyToJob(username, id) {
+    await this.request(`users/${username}/jobs/${id}`, {}, "post");
+  }
+
     //Users
 
    /** sign up the user */
 
-static async register(userObj) {
+static async signup(userObj) {
   try {
     let res = await this.request(`auth/register`, userObj, "post");
-    return res;
+    return res.token;
   } catch(e) {
       return new Error(e);
   }
@@ -96,7 +103,7 @@ static async register(userObj) {
    static async login(userObj) {
     try {
       let res = await this.request(`auth/token`, userObj, "post");
-      return res;
+      return res.token;
     } catch(e) {
         return new Error(e);
     }
@@ -120,11 +127,6 @@ static async register(userObj) {
     return res.user;
   }
 
-    /** Apply to a job */
-
-  static async applyToJob(username, id) {
-    await this.request(`users/${username}/jobs/${id}`, {}, "post");
-  }
 
 
 }

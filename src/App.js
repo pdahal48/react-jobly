@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import Routes from './Routes'
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import {BrowserRouter} from 'react-router-dom'
 import NavBar from './NavBar'
 import useLocalStorage from './Hooks'
-import Home from './Home'
 import UserContext from './Users/UserContext'
 import jwt from 'jsonwebtoken'
 import {JoblyApi as API} from './backend/helpers/api'
@@ -13,7 +12,7 @@ import './App.css';
 export const TOKEN_STORAGE_ID = "jobly-token";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState([null])
+  const [currentUser, setCurrentUser] = useState(null)
   const [currUserToken, setCurrUserToken] = useLocalStorage(TOKEN_STORAGE_ID)
   const [applicationIds, setApplicationIds] = useState(new Set([]));
 
@@ -48,10 +47,10 @@ function App() {
     try {
       let token = await API.login(loginData);
       setCurrUserToken(token);
-      return { success: true };
+      return {success: true}
     } catch (errors) {
       console.error("login failed", errors);
-      return { success: false, errors };
+      return {success: false, errors}
     }
   }
 
@@ -74,10 +73,10 @@ function App() {
       <div>
         <BrowserRouter>
           <UserContext.Provider 
-            value = {{currentUser, setCurrUserToken, currUserToken, setCurrentUser, hasAppliedToJob, applyToJob}}>
+            value = {{currentUser, setCurrentUser, hasAppliedToJob, applyToJob}}>
               <div className="App">
               <NavBar logout={logout} />
-              <Routes login={login} signup={signup} />
+              <Routes loginUser ={login} signup={signup} />
               </div>
           </UserContext.Provider>
         </BrowserRouter>

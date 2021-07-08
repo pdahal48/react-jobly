@@ -17,7 +17,7 @@ import PrivateRoute from "./PrivateRoute";
  * Visiting a non-existant route redirects to the homepage.
  */
 
-function Routes({ login, signup }) {
+function Routes({ loginUser, signup }) {
 
   return (
       <div className="pt-5">
@@ -28,7 +28,7 @@ function Routes({ login, signup }) {
           </Route>
 
           <Route exact path="/login">
-            <Login login={login} />
+            <Login loginUser ={loginUser} />
           </Route>
 
           <Route exact path="/signup">

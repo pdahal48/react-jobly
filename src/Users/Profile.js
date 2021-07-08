@@ -5,7 +5,6 @@ import {useHistory} from 'react-router-dom'
 
 const Profile = () => {
     const { currentUser, setCurrentUser } = useContext(UserContext)
-    const History = useHistory()
 
     const [signupformdata, setSignUpFormData] = useState({
         username: currentUser.username,
@@ -36,7 +35,6 @@ const Profile = () => {
         }
         setSignUpFormData(f => ({ ...f, password: "" }));
         setCurrentUser(updatedUser);
-        History.push('/')
     }
 
     const handleChange = (e) => {
