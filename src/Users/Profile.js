@@ -1,7 +1,6 @@
-import react, { useState, useContext} from 'react'
-import {JoblyApi as API} from '../backend/helpers/api'
+import { useState, useContext} from 'react'
+import {JoblyApi as API} from '../api'
 import UserContext from './UserContext'
-import {useHistory} from 'react-router-dom'
 
 const Profile = () => {
     const { currentUser, setCurrentUser } = useContext(UserContext)

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
-import {JoblyApi as API} from '../backend/helpers/api'
+import {JoblyApi as API} from '../api'
 import LoadingSpinner from "../LoadingSpinner";
 
 const CompanyDetail = () => {
@@ -10,7 +10,6 @@ const CompanyDetail = () => {
 
     useEffect(() => {
         async function getCompanyDetail() {
-            const comp = await API.getCompany(handle)
             setCompanyInfo(await API.getCompany(handle))
         }
         getCompanyDetail()

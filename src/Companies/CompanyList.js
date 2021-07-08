@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useContext} from 'react'
-import {JoblyApi as API} from '../backend/helpers/api'
+import React, { useState, useEffect } from 'react'
+import {JoblyApi as API} from '../api'
 import SearchForm from "../SearchForm";
 import CompanyCard from "./CompanyCard";
 import LoadingSpinner from "../LoadingSpinner";

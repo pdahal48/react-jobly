@@ -4,25 +4,23 @@ import { useHistory } from 'react-router-dom'
 
 
 const Login = ({ loginUser }) => {
-    const INITIAL_DATA = ({
+
+    const history = useHistory()
+    const [loginFormData, setloginFormData] = useState({
         username: "",
         password: ""
-    })
-
-    const [loginFormData, setloginFormData] = useState(INITIAL_DATA);
-    const history = useHistory()
+    });
 
     async function handleSubmit(e) {
             e.preventDefault()
             let user = await loginUser(loginFormData)
             if(user.success){
-                history.push('/')
+                history.push('/companies')
                 window.location.reload()
             } else {
                 return console.log(user.errors)
             }
     }
-
 
     const handleChange = (e) => {
         const {name, value} = e.target

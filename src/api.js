@@ -1,5 +1,4 @@
 import axios from "axios";
-const { BadRequestError } = require("../expressError");
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
 /** API Class.
@@ -100,14 +99,11 @@ static async signup(userObj) {
 
    /** Logs in the user */
 
-   static async login(userObj) {
-    try {
-      let res = await this.request(`auth/token`, userObj, "post");
-      return res.token;
-    } catch(e) {
-        return new Error(e);
-    }
+   static async login(data) {
+    let res = await this.request(`auth/token`, data, "post");
+    return res.token;
   }
+
 
     /** PUlls user info */
 
@@ -126,12 +122,4 @@ static async signup(userObj) {
     let res = await this.request(`users/${username}`, data, "patch");
     return res.user;
   }
-
-
-
 }
-  // JoblyApi.token = localStorage['user-token']
-
-// for now, put token ("testuser" / "password" on class)
-// JoblyApi.token = "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBkYWhhbDQwIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYyNTUwODE2N30.75rmK5OWZ7py5bIJOAXgBOgXG9zSnabq-1L1QchJ8oo\"";
-
